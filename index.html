@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AURUM — Vaqt — bu hashamat san'ati</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0a;
+    --bg2:#111111;
+    --bg3:#161616;
+    --gold:#d4af37;
+    --gold2:#c9a227;
+    --gold-light:#f0d98c;
+    --gold-grad:linear-gradient(135deg,#f0d98c 0%,#d4af37 45%,#a87f1f 100%);
+    --text:#f5f1e8;
+    --muted:#a89f8d;
+    --line:rgba(212,175,55,.22);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Jost',sans-serif;
+    font-weight:300;
+    line-height:1.7;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--gold);color:#0a0a0a;}
+  h1,h2,h3,.serif{font-family:'Cormorant Garamond',serif;font-weight:600;}
+
+  /* ===== NAV ===== */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:22px 6%;
+    transition:all .4s ease;
+  }
+  nav.scrolled{
+    background:rgba(10,10,10,.92);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);
+    padding:14px 6%;
+  }
+  .logo{
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.7rem;letter-spacing:8px;color:var(--gold);
+    font-weight:700;text-decoration:none;
+  }
+  .nav-links{display:flex;gap:38px;list-style:none;}
+  .nav-links a{
+    color:var(--muted);text-decoration:none;font-size:.85rem;
+    letter-spacing:2px;text-transform:uppercase;transition:color .3s;
+    position:relative;
+  }
+  .nav-links a::after{
+    content:'';position:absolute;left:0;bottom:-6px;width:0;height:1px;
+    background:var(--gold);transition:width .3s;
+  }
+  .nav-links a:hover{color:var(--gold);}
+  .nav-links a:hover::after{width:100%;}
+  .burger{display:none;cursor:pointer;flex-direction:column;gap:5px;}
+  .burger span{width:26px;height:2px;background:var(--gold);}
+
+  /* ===== HERO ===== */
+  .hero{
+    min-height:100vh;
+    display:flex;flex-direction:column;justify-content:center;align-items:center;
+    text-align:center;position:relative;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 40%, rgba(212,175,55,.10), transparent 70%),
+      linear-gradient(180deg,#0a0a0a 0%,#0d0d0d 100%);
+    padding:0 6%;
+  }
+  .hero::before{
+    content:'';position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(circle at 50% 30%, rgba(212,175,55,.06), transparent 60%);
+  }
+  .hero-kicker{
+    letter-spacing:6px;text-transform:uppercase;color:var(--gold);
+    font-size:.8rem;margin-bottom:24px;animation:fadeUp 1s ease .2s both;
+  }
+  .hero h1{
+    font-size:clamp(3rem,9vw,6.5rem);
+    letter-spacing:.12em;line-height:1.05;
+    background:var(--gold-grad);
+    -webkit-background-clip:text;background-clip:text;
+    -webkit-text-fill-color:transparent;
+    animation:fadeUp 1s ease .4s both;
+  }
+  .hero-tagline{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:clamp(1.2rem,3vw,1.8rem);color:var(--text);
+    margin:26px 0 40px;animation:fadeUp 1s ease .6s both;
+  }
+  .hero-divider{
+    width:80px;height:1px;background:var(--gold-grad);
+    margin:0 auto 30px;animation:fadeUp 1s ease .5s both;
+  }
+  .btn{
+    display:inline-block;padding:16px 44px;text-decoration:none;
+    font-size:.85rem;letter-spacing:3px;text-transform:uppercase;
+    transition:all .35s ease;cursor:pointer;border:none;
+  }
+  .btn-gold{
+    background:var(--gold-grad);color:#0a0a0a;font-weight:600;
+    box-shadow:0 8px 30px rgba(212,175,55,.25);
+    animation:fadeUp 1s ease .8s both;
+  }
+  .btn-gold:hover{
+    transform:translateY(-3px);
+    box-shadow:0 14px 40px rgba(212,175,55,.4);
+  }
+  .btn-ghost{
+    border:1px solid var(--gold);color:var(--gold);
+    background:transparent;animation:fadeUp 1s ease .9s both;
+  }
+  .btn-ghost:hover{background:rgba(212,175,55,.1);}
+  .hero-btns{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;}
+  .hero-scroll{
+    position:absolute;bottom:36px;left:50%;transform:translateX(-50%);
+    color:var(--muted);font-size:.7rem;letter-spacing:3px;text-transform:uppercase;
+    animation:bounce 2s infinite;
+  }
+  @keyframes fadeUp{
+    from{opacity:0;transform:translateY(30px);}
+    to{opacity:1;transform:translateY(0);}
+  }
+  @keyframes bounce{
+    0%,100%{transform:translate(-50%,0);}50%{transform:translate(-50%,10px);}
+  }
+
+  /* ===== SECTIONS ===== */
+  section{padding:110px 6%;}
+  .section-head{text-align:center;max-width:720px;margin:0 auto 70px;}
+  .section-kicker{
+    color:var(--gold);letter-spacing:5px;text-transform:uppercase;
+    font-size:.75rem;margin-bottom:16px;
+  }
+  .section-title{
+    font-size:clamp(2rem,5vw,3.2rem);letter-spacing:.05em;margin-bottom:20px;
+  }
+  .section-sub{color:var(--muted);font-size:1rem;}
+  .gold-line{
+    width:60px;height:1px;background:var(--gold-grad);
+    margin:24px auto 0;
+  }
+
+  /* ===== PHILOSOPHY ===== */
+  .philosophy{
+    background:var(--bg2);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .philosophy-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center;
+    max-width:1100px;margin:0 auto;
+  }
+  .philosophy-text h3{
+    font-size:clamp(1.6rem,3.5vw,2.4rem);margin-bottom:24px;line-height:1.3;
+  }
+  .philosophy-text p{color:var(--muted);margin-bottom:18px;}
+  .philosophy-text .accent{color:var(--gold);font-style:italic;}
+  .philosophy-stats{
+    display:grid;grid-template-columns:1fr 1fr;gap:30px;
+  }
+  .stat{
+    border:1px solid var(--line);padding:34px 24px;text-align:center;
+    background:rgba(212,175,55,.03);transition:all .4s;
+  }
+  .stat:hover{background:rgba(212,175,55,.08);transform:translateY(-4px);}
+  .stat-num{
+    font-family:'Cormorant Garamond',serif;font-size:2.6rem;font-weight:700;
+    background:var(--gold-grad);
+    -webkit-background-clip:text;background-clip:text;
+    -webkit-text-fill-color:transparent;
+  }
+  .stat-label{color:var(--muted);font-size:.8rem;letter-spacing:2px;text-transform:uppercase;margin-top:6px;}
+
+  /* ===== PRODUCTS ===== */
+  .products-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:34px;max-width:1200px;margin:0 auto;
+  }
+  .product-card{
+    background:var(--bg2);border:1px solid var(--line);padding:40px 30px;
+    text-align:center;transition:all .45s ease;position:relative;overflow:hidden;
+  }
+  .product-card::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:3px;
+    background:var(--gold-grad);transform:scaleX(0);transform-origin:left;
+    transition:transform .45s ease;
+  }
+  .product-card:hover::before{transform:scaleX(1);}
+  .product-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 20px 60px rgba(0,0,0,.5);
+    border-color:rgba(212,175,55,.45);
+  }
+  .watch-visual{
+    width:170px;height:170px;margin:0 auto 28px;border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #2a2a2a, #101010);
+    border:1px solid rgba(212,175,55,.3);
+    display:flex;align-items:center;justify-content:center;
+    position:relative;box-shadow:0 0 50px rgba(212,175,55,.08) inset;
+  }
+  .watch-visual::after{
+    content:'';position:absolute;width:120px;height:120px;border-radius:50%;
+    border:1px solid rgba(212,175,55,.35);
+  }
+  .watch-visual .hands{
+    position:absolute;width:2px;height:40px;background:var(--gold);
+    top:50%;left:50%;transform-origin:bottom center;
+  }
+  .watch-visual .hands.h1{transform:translate(-50%,-100%) rotate(0deg);height:34px;}
+  .watch-visual .hands.h2{transform:translate(-50%,-100%) rotate(70deg);height:44px;}
+  .watch-visual .center{
+    position:absolute;width:8px;height:8px;border-radius:50%;
+    background:var(--gold);top:50%;left:50%;transform:translate(-50%,-50%);
+  }
+  .product-name{
+    font-family:'Cormorant Garamond',serif;font-size:1.5rem;letter-spacing:.05em;margin-bottom:8px;
+  }
+  .product-desc{color:var(--muted);font-size:.9rem;margin-bottom:18px;}
+  .product-price{
+    font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--gold);margin-bottom:22px;
+  }
+  .product-link{
+    color:var(--gold);text-decoration:none;font-size:.8rem;letter-spacing:2px;
+    text-transform:uppercase;border-bottom:1px solid var(--gold);padding-bottom:4px;
+    transition:all .3s;
+  }
+  .product-link:hover{color:var(--gold-light);border-color:var(--gold-light);}
+
+  /* ===== FEATURES ===== */
+  .features{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .features-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:30px;max-width:1200px;margin:0 auto;
+  }
+  .feature{text-align:center;padding:36px 22px;transition:all .4s;border:1px solid transparent;}
+  .feature:hover{border-color:var(--line);background:rgba(212,175,55,.03);}
+  .feature-icon{
+    width:64px;height:64px;margin:0 auto 22px;border:1px solid var(--gold);
+    border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-size:1.5rem;color:var(--gold);transition:all .4s;
+  }
+  .feature:hover .feature-icon{background:var(--gold-grad);color:#0a0a0a;box-shadow:0 0 30px rgba(212,175,55,.3);}
+  .feature h4{font-family:'Cormorant Garamond',serif;font-size:1.25rem;margin-bottom:10px;}
+  .feature p{color:var(--muted);font-size:.88rem;}
+
+  /* ===== TESTIMONIALS ===== */
+  .testimonials-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:34px;max-width:1200px;margin:0 auto;
+  }
+  .testimonial{
+    background:var(--bg2);border:1px solid var(--line);padding:40px 32px;position:relative;
+  }
+  .testimonial .quote-mark{
+    font-family:'Cormorant Garamond',serif;font-size:4rem;color:var(--gold);
+    line-height:0;position:absolute;top:34px;left:28px;opacity:.6;
+  }
+  .testimonial p{color:var(--muted);font-style:italic;margin:20px 0 26px;font-family:'Cormorant Garamond',serif;font-size:1.1rem;}
+  .testimonial-author{color:var(--gold);font-size:.85rem;letter-spacing:2px;text-transform:uppercase;}
+  .testimonial-role{color:var(--muted);font-size:.75rem;letter-spacing:1px;}
+  .stars{color:var(--gold);letter-spacing:3px;margin-bottom:8px;font-size:.9rem;}
+
+  /* ===== CONTACT ===== */
+  .contact{
+    background:
+      radial-gradient(ellipse 50% 40% at 50% 100%, rgba(212,175,55,.08), transparent 70%),
+      var(--bg2);
+    border-top:1px solid var(--line);
+  }
+  .contact-wrap{max-width:900px;margin:0 auto;text-align:center;}
+  .contact-form{
+    display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:50px;text-align:left;
+  }
+  .form-group{display:flex;flex-direction:column;}
+  .form-group.full{grid-column:1/-1;}
+  .form-group label{
+    color:var(--gold);font-size:.75rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;
+  }
+  .form-group input,.form-group textarea{
+    background:var(--bg);border:1px solid rgba(212,175,55,.25);
+    padding:15px 18px;color:var(--text);font-family:'Jost',sans-serif;
+    font-size:.95rem;outline:none;transition:border-color .3s;
+  }
+  .form-group input:focus,.form-group textarea:focus{border-color:var(--gold);}
+  .form-group textarea{min-height:130px;resize:vertical;}
+  .form-submit{
+    grid-column:1/-1;justify-self:center;margin-top:10px;
+  }
+
+  /* ===== FOOTER ===== */
+  footer{
+    border-top:1px solid var(--line);padding:50px 6%;text-align:center;
+    background:var(--bg);
+  }
+  .footer-logo{
+    font-family:'Cormorant Garamond',serif;font-size:1.6rem;letter-spacing:8px;
+    color:var(--gold);font-weight:700;margin-bottom:18px;
+  }
+  .footer-socials{display:flex;gap:24px;justify-content:center;margin-bottom:26px;}
+  .footer-socials a{
+    width:42px;height:42px;border:1px solid var(--line);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;color:var(--muted);
+    text-decoration:none;transition:all .3s;
+  }
+  .footer-socials a:hover{color:var(--gold);border-color:var(--gold);transform:translateY(-3px);}
+  .footer-copy{color:#6b6455;font-size:.8rem;letter-spacing:1px;}
+
+  /* ===== REVEAL ANIMATION ===== */
+  .reveal{opacity:0;transform:translateY(40px);transition:all .9s ease;}
+  .reveal.visible{opacity:1;transform:translateY(0);}
+  .reveal-delay-1{transition-delay:.15s;}
+  .reveal-delay-2{transition-delay:.3s;}
+  .reveal-delay-3{transition-delay:.45s;}
+
+  /* ===== RESPONSIVE ===== */
+  @media(max-width:1024px){
+    .products-grid,.testimonials-grid{grid-template-columns:1fr 1fr;}
+    .features-grid{grid-template-columns:1fr 1fr;}
+    .philosophy-grid{grid-template-columns:1fr;gap:50px;}
+  }
+  @media(max-width:768px){
+    .nav-links{
+      position:fixed;top:0;right:-100%;height:100vh;width:70%;max-width:320px;
+      background:rgba(10,10,10,.98);flex-direction:column;justify-content:center;
+      align-items:center;gap:34px;transition:right .4s ease;border-left:1px solid var(--line);
+    }
+    .nav-links.open{right:0;}
+    .burger{display:flex;z-index:101;}
+    .products-grid,.testimonials-grid{grid-template-columns:1fr;}
+    .features-grid{grid-template-columns:1fr 1fr;}
+    .contact-form{grid-template-columns:1fr;}
+    section{padding:80px 6%;}
+  }
+  @media(max-width:480px){
+    .features-grid{grid-template-columns:1fr;}
+    .hero-btns{flex-direction:column;align-items:center;}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="logo">AURUM</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#philosophy">Falsafa</a></li>
+    <li><a href="#products">Kolleksiya</a></li>
+    <li><a href="#features">Afzalliklar</a></li>
+    <li><a href="#testimonials">Sharhlar</a></li>
+    <li><a href="#contact">Aloqa</a></li>
+  </ul>
+  <div class="burger" id="burger"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-kicker">Premium soatlar uyi</div>
+  <h1>AURUM</h1>
+  <div class="hero-divider"></div>
+  <p class="hero-tagline">Vaqt — bu hashamat san'ati</p>
+  <div class="hero-btns">
+    <a href="#products" class="btn btn-gold">Kolleksiyani ko'rish</a>
+    <a href="#contact" class="btn btn-ghost">Bog'lanish</a>
+  </div>
+  <div class="hero-scroll">Pastga suring</div>
+</header>
+
+<!-- PHILOSOPHY -->
+<section class="philosophy" id="philosophy">
+  <div class="philosophy-grid">
+    <div class="philosophy-text reveal">
+      <div class="section-kicker">Bizning falsafa</div>
+      <h3>Har bir soat — <span class="accent">qo'lda yaratilgan asar</span></h3>
+      <p>AURUM brendi 1987-yildan beri vaqt o'lchovini san'atga aylantirib kelmoqda. Har bir soatimiz eng nozik detallargacha qo'lda ishlanadi va faqat eng yuqori sifatli materiallardan tayyorlanadi.</p>
+      <p>Bizning ustalarimiz har bir mexanizmni sinchkovlik bilan yig'adi, har bir toshni ehtiyotkorlik bilan joylashtiradi va har bir soatni <span class="accent">abadiy meros</span> sifatida yaratadi.</p>
+    </div>
+    <div class="philosophy-stats reveal reveal-delay-1">
+      <div class="stat">
+        <div class="stat-num">35+</div>
+        <div class="stat-label">Yillik tajriba</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">12k</div>
+        <div class="stat-label">Mamnun mijozlar</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Qo'lda ishlangan</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">5 yil</div>
+        <div class="stat-label">Kafolat</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section id="products">
+  <div class="section-head reveal">
+    <div class="section-kicker">Kolleksiya</div>
+    <h2 class="section-title">Bizning soatlarimiz</h2>
+    <p class="section-sub">Har bir model — o'ziga xos xarakter va abadiy nafosat timsoli</p>
+    <div class="gold-line"></div>
+  </div>
+  <div class="products-grid">
+    <div class="product-card reveal">
+      <div class="watch-visual">
+        <div class="hands h1"></div>
+        <div class="hands h2"></div>
+        <div class="center"></div>
+      </div>
+      <h3 class="product-name">AURUM Classic</h3>
+      <p class="product-desc">Klassik uslub, oltin korpus va charm tasma — har kuni uchun mukammal hamroh.</p>
+      <div class="product-price">$4 900</div>
+      <a href="#contact" class="product-link">Buyurtma berish</a>
+    </div>
+    <div class="product-card reveal reveal-delay-1">
+      <div class="watch-visual">
+        <div class="hands h1"></div>
+        <div class="hands h2"></div>
+        <div class="center"></div>
+      </div>
+      <h3 class="product-name">AURUM Royale</h3>
+      <p class="product-desc">Hashamatli dizayn, olmos qo'shimchalar va noyob mexanizm — haqiqiy durdona.</p>
+      <div class="product-price">$12 500</div>
+      <a href="#contact" class="product-link">Buyurtma berish</a>
+    </div>
+    <div class="product-card reveal reveal-delay-2">
+      <div class="watch-visual">
+        <div class="hands h1"></div>
+        <div class="hands h2"></div>
+        <div class="center"></div>
+      </div>
+      <h3 class="product-name">AURUM Heritage</h3>
+      <p class="product-desc">Cheklangan seriya, qo'lda ishlangan gravür va abadiy klassikaga hurmat.</p>
+      <div class="product-price">$8 700</div>
+      <a href="#contact" class="product-link">Buyurtma berish</a>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="section-head reveal">
+    <div class="section-kicker">Nega biz?</div>
+    <h2 class="section-title">Nega AURUMni tanlaysiz</h2>
+    <div class="gold-line"></div>
+  </div>
+  <div class="features-grid">
+    <div class="feature reveal">
+      <div class="feature-icon">◆</div>
+      <h4>Hunarmandchilik</h4>
+      <p>Har bir soat tajribali ustalar tomonidan qo'lda yig'iladi.</p>
+    </div>
+    <div class="feature reveal reveal-delay-1">
+      <div class="feature-icon">◈</div>
+      <h4>Premium materiallar</h4>
+      <p>18 karat oltin, Shveytsariya mexanizmi va haqiqiy teri.</p>
+    </div>
+    <div class="feature reveal reveal-delay-2">
+      <div class="feature-icon">✧</div>
+      <h4>Cheklangan seriya</h4>
+      <p>Har bir model faqat 500 nusxada ishlab chiqariladi.</p>
+    </div>
+    <div class="feature reveal reveal-delay-3">
+      <div class="feature-icon">❖</div>
+      <h4>5 yillik kafolat</h4>
+      <p>Bepul xizmat ko'rsatish va umrbod texnik yordam.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="section-head reveal">
+    <div class="section-kicker">Mijozlar fikri</div>
+    <h2 class="section-title">Sharhlar</h2>
+    <div class="gold-line"></div>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial reveal">
+      <span class="quote-mark">"</span>
+      <div class="stars">★★★★★</div>
+      <p>AURUM Classic soatimni 3 yil oldin sotib olganman. Hali ham yangidek — bu haqiqiy san'at asari!</p>
+      <div class="testimonial-author">Aziz Karimov</div>
+      <div class="testimonial-role">Toshkent</div>
+    </div>
+    <div class="testimonial reveal reveal-delay-1">
+      <span class="quote-mark">"</span>
+      <div class="stars">★★★★★</div>
+      <p>Royale modeli — eng yaxshi investitsiyam bo'ldi. Sifat va nafosatning mukammal uyg'unligi.</p>
+      <div class="testimonial-author">Malika Yusupova</div>
+      <div class="testimonial-role">Samarqand</div>
+    </div>
+    <div class="testimonial reveal reveal-delay-2">
+      <span class="quote-mark">"</span>
+      <div class="stars">★★★★★</div>
+      <p>Cheklangan seriya Heritage soatimni o'g'limga meros qilib qoldiraman. Ajoyib xizmat!</p>
+      <div class="testimonial-author">Jasur Toshmatov</div>
+      <div class="testimonial-role">Buxoro</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-wrap">
+    <div class="section-head reveal">
+      <div class="section-kicker">Aloqa</div>
+      <h2 class="section-title">Biz bilan bog'laning</h2>
+      <p class="section-sub">Savollaringiz bormi? Konsultantlarimiz 24/7 sizga yordam berishga tayyor.</p>
+      <div class="gold-line"></div>
+    </div>
+    <form class="contact-form reveal" onsubmit="event.preventDefault(); this.reset(); alert('Rahmat! So\'rovingiz qabul qilindi. Tez orada siz bilan bog\'lanamiz.');">
+      <div class="form-group">
+        <label>Ismingiz</label>
+        <input type="text" placeholder="Ismingizni kiriting" required>
+      </div>
+      <div class="form-group">
+        <label>Telefon</label>
+        <input type="tel" placeholder="+998 __ ___ __ __" required>
+      </div>
+      <div class="form-group full">
+        <label>Xabar</label>
+        <textarea placeholder="Savolingizni yozing..."></textarea>
+      </div>
+      <button type="submit" class="btn btn-gold form-submit">Yuborish</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">AURUM</div>
+  <div class="footer-socials">
+    <a href="#" aria-label="Instagram">IG</a>
+    <a href="#" aria-label="Telegram">TG</a>
+    <a href="#" aria-label="Facebook">FB</a>
+    <a href="#" aria-label="YouTube">YT</a>
+  </div>
+  <div class="footer-copy">© 2026 AURUM. Barcha huquqlar himoyalangan.</div>
+</footer>
+
+<script>
+  // Navbar scroll effect
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // Mobile menu
+  const burger = document.getElementById('burger');
+  const navLinks = document.getElementById('navLinks');
+  burger.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+  // Reveal on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, {threshold: 0.15});
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
